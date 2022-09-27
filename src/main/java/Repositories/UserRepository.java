@@ -10,8 +10,10 @@ import java.sql.SQLException;
 
 public class UserRepository {
     private static final String INSERT_QUERY = "insert into nafar (username, national_code, birthday, password) Values (?,?,?,?)";
-    private static final String SEARCH_USER_QUERY = "select username , password from nafar where username=? and password =?";
+    private static final String SEARCH_USER_QUERY = "select id, username , password from nafar where username=? and password =?";
      public static boolean boll;
+     public static boolean bollS;
+     public static int UserId;
     public static void login (User user){
         try {
             Connection connection = DbConnection.getInstance();
@@ -21,6 +23,10 @@ public class UserRepository {
 
             boll = prepareStatement.execute();
 
+            ResultSet re = prepareStatement.executeQuery();
+            while (re.next()){
+               UserId = re.getInt("id");
+            }
             prepareStatement.close();
            // connection.close();
         } catch (SQLException e) {
@@ -30,7 +36,7 @@ public class UserRepository {
     }
 
 //    -------------------
-    public static void Sign_in(User user){
+    public static void Sign_in (User user){
         try {
             Connection connection = DbConnection.getInstance();
             PreparedStatement prepareStatement = connection.prepareStatement(INSERT_QUERY);
@@ -40,7 +46,7 @@ public class UserRepository {
             prepareStatement.setString(4,user.getPassWord());
 
 
-            boll = prepareStatement.execute();
+            bollS = prepareStatement.execute();
 
 
             prepareStatement.close();
