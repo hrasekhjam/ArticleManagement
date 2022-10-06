@@ -3,6 +3,7 @@ package Repositories;
 import classes.Article;
 import classes.User;
 import connection.DbConnection;
+import sun.applet.Main;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,22 +11,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ArticleRepository {
-    private static final String INSERT_QUERY = "insert into article(title, brief, content, create_date, is_published,user_id) VALUES (?,?,?,?,?,?)";
-    private static final String SEARCH_ARTICLE_QUERY = "select * from article where user_id = ?";
-    private static final String EDITE_ARTICLE_QUERY = "update article set ? = ? where id = ?";
+
     public static int edstring;
+        private static final String INSERT_QUERY = "insert into article(title, brief, content, create_date, is_published,user_id) VALUES (?,?,?,?,?,?)";
+        private static final String SEARCH_ARTICLE_QUERY = "select * from article where user_id = ?";
+        public static  String EDITE_ARTICLE_QUERY ;
+
 
     public static void Edite_art(Article article){
         try {
             Connection connection = DbConnection.getInstance();
             PreparedStatement prepareStatement = connection.prepareStatement(EDITE_ARTICLE_QUERY);
-            prepareStatement.setString(1,article.getIndex());
-           // prepareStatement.setString(3,article.getIndex());
-            prepareStatement.setString(2,article.getEdindex());
-            //prepareStatement.setInt(3,article.getWhereindx());
-            prepareStatement.setInt(3,edstring);
-
+            prepareStatement.setString(1,article.getEdindex());
+            prepareStatement.setInt(2,edstring);
             prepareStatement.execute();
+
 
 
 
